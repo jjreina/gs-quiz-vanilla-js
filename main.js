@@ -1,12 +1,36 @@
 import "./style.css";
 
+const mockData = [
+  {
+    question: "What is the capital of France?",
+    options: ["London", "Berlin", "Paris", "Madrid"],
+  },
+  {
+    question: "What is the longest river in the world?",
+    options: ["Amazonas", "Nilo", "Yangtsé", "Miño"],
+  },
+  {
+    question: "Who wrote Romeo and Juliet?",
+    options: [
+      "Jane Austen",
+      "Cervantes",
+      "William Shakerpeare",
+      "Charles Dickens",
+    ],
+  },
+  {
+    question: "How many planets are there in our solar system?",
+    options: ["7", "8", "9", "10"],
+  },
+];
+
 const TEXT_TITLE = "Quiz Question";
-const TEXT_QUESTION_ARRAY = [
+/*const TEXT_QUESTION_ARRAY = [
   "What is the capital of France?",
   "What is the longest river in the world?",
   "Who wrote Romeo and Juliet?",
   "How many planets are there in our solar system?",
-];
+];*/
 const ANSWERS_ARRAY = [
   ["London", "Berlin", "Paris", "Madrid"],
   ["Amazonas", "Nilo", "Yangtsé", "Miño"],
@@ -24,7 +48,7 @@ const body = document.querySelector("body");
 const h2Title = document.createElement("h2");
 h2Title.textContent = TEXT_TITLE;
 const pQuestion = document.createElement("p");
-pQuestion.textContent = TEXT_QUESTION_ARRAY[0];
+pQuestion.textContent = mockData[0].question;
 
 const divContainer = document.createElement("div");
 divContainer.className = "container";
@@ -87,7 +111,7 @@ buttonsFooter[0].addEventListener("click", () => {
   if (currentQuestionIndex > 0) {
     buttonsFooter[1].disabled = false; // Enable Next button
     currentQuestionIndex--;
-    pQuestion.textContent = TEXT_QUESTION_ARRAY[currentQuestionIndex];
+    pQuestion.textContent = mockData[currentQuestionIndex].question;
     buttonsFooter[0].disabled = currentQuestionIndex === 0;
     setAnswers(ulContainer, ANSWERS_ARRAY);
   }
@@ -95,12 +119,11 @@ buttonsFooter[0].addEventListener("click", () => {
 
 // Next button
 buttonsFooter[1].addEventListener("click", () => {
-  if (currentQuestionIndex < TEXT_QUESTION_ARRAY.length - 1) {
+  if (currentQuestionIndex < mockData.length - 1) {
     buttonsFooter[0].disabled = false; // Enable Previous button
     currentQuestionIndex++;
-    pQuestion.textContent = TEXT_QUESTION_ARRAY[currentQuestionIndex];
-    buttonsFooter[1].disabled =
-      currentQuestionIndex === TEXT_QUESTION_ARRAY.length - 1;
+    pQuestion.textContent = mockData[currentQuestionIndex].question;
+    buttonsFooter[1].disabled = currentQuestionIndex === mockData.length - 1;
     setAnswers(ulContainer, ANSWERS_ARRAY);
   }
 });
