@@ -25,18 +25,6 @@ const mockData = [
 ];
 
 const TEXT_TITLE = "Quiz Question";
-/*const TEXT_QUESTION_ARRAY = [
-  "What is the capital of France?",
-  "What is the longest river in the world?",
-  "Who wrote Romeo and Juliet?",
-  "How many planets are there in our solar system?",
-];*/
-/*const ANSWERS_ARRAY = [
-  ["London", "Berlin", "Paris", "Madrid"],
-  ["Amazonas", "Nilo", "Yangtsé", "Miño"],
-  ["Jane Austen", "Cervantes", "William Shakerpeare", "Charles Dickens"],
-  ["7", "8", "9", "10"],
-];*/
 
 const TEXT_BUTTONS_ARRAY = ["Previous", "Next"];
 
