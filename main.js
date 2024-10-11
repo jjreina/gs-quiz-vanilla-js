@@ -31,12 +31,12 @@ const TEXT_TITLE = "Quiz Question";
   "Who wrote Romeo and Juliet?",
   "How many planets are there in our solar system?",
 ];*/
-const ANSWERS_ARRAY = [
+/*const ANSWERS_ARRAY = [
   ["London", "Berlin", "Paris", "Madrid"],
   ["Amazonas", "Nilo", "Yangtsé", "Miño"],
   ["Jane Austen", "Cervantes", "William Shakerpeare", "Charles Dickens"],
   ["7", "8", "9", "10"],
-];
+];*/
 
 const TEXT_BUTTONS_ARRAY = ["Previous", "Next"];
 
@@ -91,7 +91,7 @@ const createFooter = (textButtons) => {
 
 divContainer.appendChild(h2Title);
 divContainer.appendChild(pQuestion);
-let ulContainer = createUl(ANSWERS_ARRAY[currentQuestionIndex]);
+let ulContainer = createUl(mockData[currentQuestionIndex].options);
 divContainer.appendChild(ulContainer);
 divContainer.appendChild(createFooter(TEXT_BUTTONS_ARRAY));
 body.appendChild(divContainer);
@@ -99,10 +99,10 @@ body.appendChild(divContainer);
 /********* Funcionality ***************/
 
 // Set answers in the ulContainer list element
-const setAnswers = (ulContainer, ANSWERS_ARRAY) => {
+const setAnswers = (ulContainer, mockData) => {
   Array.from(ulContainer.children).forEach((liAnswer, index) => {
     liAnswer.firstChild.textContent =
-      ANSWERS_ARRAY[currentQuestionIndex][index];
+      mockData[currentQuestionIndex].options[index];
   });
 };
 
@@ -113,7 +113,7 @@ buttonsFooter[0].addEventListener("click", () => {
     currentQuestionIndex--;
     pQuestion.textContent = mockData[currentQuestionIndex].question;
     buttonsFooter[0].disabled = currentQuestionIndex === 0;
-    setAnswers(ulContainer, ANSWERS_ARRAY);
+    setAnswers(ulContainer, mockData);
   }
 });
 
@@ -124,6 +124,6 @@ buttonsFooter[1].addEventListener("click", () => {
     currentQuestionIndex++;
     pQuestion.textContent = mockData[currentQuestionIndex].question;
     buttonsFooter[1].disabled = currentQuestionIndex === mockData.length - 1;
-    setAnswers(ulContainer, ANSWERS_ARRAY);
+    setAnswers(ulContainer, mockData);
   }
 });
