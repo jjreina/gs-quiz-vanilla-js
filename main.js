@@ -48,6 +48,16 @@ const createButton = (text, className) => {
   const button = document.createElement("button");
   button.textContent = text;
   button.classList.add(className);
+  button.addEventListener("click", (e) => {
+    let buttons = document.querySelectorAll(".answer-btn");
+    buttons.forEach((button) => {
+      if (button.hasAttribute("style")) {
+        button.removeAttribute("style");
+      } else {
+        button.style.background = "#3CB371";
+      }
+    });
+  });
   return button;
 };
 
