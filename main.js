@@ -28,6 +28,8 @@ const TEXT_TITLE = "Quiz Question";
 
 const TEXT_BUTTONS_ARRAY = ["Previous", "Next"];
 
+const OPTIOON_SELECTED = "#3CB371";
+
 let currentQuestionIndex = 0;
 
 /********* Design *******/
@@ -48,16 +50,6 @@ const createButton = (text, className) => {
   const button = document.createElement("button");
   button.textContent = text;
   button.classList.add(className);
-  button.addEventListener("click", (e) => {
-    let buttons = document.querySelectorAll(".answer-btn");
-    buttons.forEach((button) => {
-      if (button.hasAttribute("style")) {
-        button.removeAttribute("style");
-      } else {
-        button.style.background = "#3CB371";
-      }
-    });
-  });
   return button;
 };
 
@@ -107,6 +99,7 @@ const setAnswers = (ulContainer, mockData) => {
 // Previous button
 buttonsFooter[0].addEventListener("click", () => {
   if (currentQuestionIndex > 0) {
+    resetOptions();
     buttonsFooter[1].disabled = false; // Enable Next button
     currentQuestionIndex--;
     pQuestion.textContent = mockData[currentQuestionIndex].question;
@@ -118,6 +111,7 @@ buttonsFooter[0].addEventListener("click", () => {
 // Next button
 buttonsFooter[1].addEventListener("click", () => {
   if (currentQuestionIndex < mockData.length - 1) {
+    resetOptions();
     buttonsFooter[0].disabled = false; // Enable Previous button
     currentQuestionIndex++;
     pQuestion.textContent = mockData[currentQuestionIndex].question;
@@ -125,3 +119,15 @@ buttonsFooter[1].addEventListener("click", () => {
     setAnswers(ulContainer, mockData);
   }
 });
+
+let buttons = document.querySelectorAll(".answer-btn");
+buttons.forEach((button) => {
+  button.addEventListener("click", (e) => {
+    resetOptions();
+    button.style.background = OPTIOON_SELECTED;
+  });
+});
+
+const resetOptions = () => {
+  buttons.forEach((button) => button.removeAttribute("style"));
+};
