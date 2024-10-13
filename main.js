@@ -24,6 +24,8 @@ const mockData = [
   },
 ];
 
+let storageAnswerSelected = [];
+
 const TEXT_TITLE = "Quiz Question";
 
 const TEXT_BUTTONS_ARRAY = ["Previous", "Next"];
@@ -102,34 +104,47 @@ const setAnswers = (ulContainer, mockData) => {
 // Previous button
 buttonsFooter[0].addEventListener("click", () => {
   if (currentQuestionIndex > 0) {
-    resetOptions();
     buttonsFooter[1].disabled = false; // Enable Next button
     currentQuestionIndex--;
     pQuestion.textContent = mockData[currentQuestionIndex].question;
     buttonsFooter[0].disabled = currentQuestionIndex === 0;
     setAnswers(ulContainer, mockData);
+    resetOptions();
   }
 });
 
 // Next button
 buttonsFooter[1].addEventListener("click", () => {
   if (currentQuestionIndex < mockData.length - 1) {
-    resetOptions();
     buttonsFooter[0].disabled = false; // Enable Previous button
     currentQuestionIndex++;
     pQuestion.textContent = mockData[currentQuestionIndex].question;
     buttonsFooter[1].disabled = currentQuestionIndex === mockData.length - 1;
     setAnswers(ulContainer, mockData);
+    resetOptions();
   }
 });
 
+// Devolvemos el id del mockData que contiene la pregunta que se le pasa como argumento
+let findQuestionId = (stringQuestion) => {
+  return mockData.findIndex(
+    (questionObject) => questionObject.question === stringQuestion
+  );
+};
+
 optionButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
-    resetOptions();
     button.style.background = OPTIOON_SELECTED;
+    storageAnswerSelected[findQuestionId(pQuestion.textContent)] =
+      e.target.textContent;
+    resetOptions();
   });
 });
 
 const resetOptions = () => {
-  optionButtons.forEach((button) => button.removeAttribute("style"));
+  optionButtons.forEach((button) => {
+    button.textContent === storageAnswerSelected[currentQuestionIndex]
+      ? (button.style.background = OPTIOON_SELECTED)
+      : button.removeAttribute("style");
+  });
 };
