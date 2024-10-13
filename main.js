@@ -46,10 +46,12 @@ divContainer.className = "container";
 const divFooter = document.createElement("div");
 divFooter.className = "container-footer";
 
+let optionButtons = [];
 const createButton = (text, className) => {
   const button = document.createElement("button");
   button.textContent = text;
   button.classList.add(className);
+  optionButtons.push(button);
   return button;
 };
 
@@ -120,8 +122,7 @@ buttonsFooter[1].addEventListener("click", () => {
   }
 });
 
-let buttons = document.querySelectorAll(".answer-btn");
-buttons.forEach((button) => {
+optionButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
     resetOptions();
     button.style.background = OPTIOON_SELECTED;
@@ -129,5 +130,5 @@ buttons.forEach((button) => {
 });
 
 const resetOptions = () => {
-  buttons.forEach((button) => button.removeAttribute("style"));
+  optionButtons.forEach((button) => button.removeAttribute("style"));
 };
