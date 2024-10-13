@@ -46,18 +46,19 @@ divContainer.className = "container";
 const divFooter = document.createElement("div");
 divFooter.className = "container-footer";
 
-let optionButtons = [];
 const createButton = (text, className) => {
   const button = document.createElement("button");
   button.textContent = text;
   button.classList.add(className);
-  optionButtons.push(button);
   return button;
 };
 
+let optionButtons = [];
 const createLi = (textButton) => {
   const li = document.createElement("li");
-  li.appendChild(createButton(textButton, "answer-btn"));
+  let button = createButton(textButton, "answer-btn");
+  li.appendChild(button);
+  optionButtons.push(button);
   return li;
 };
 
