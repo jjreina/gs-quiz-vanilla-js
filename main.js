@@ -162,11 +162,54 @@ const enableCheckButton = () => {
   );
 };
 
+const createModal = () => {
+  const divModal = document.createElement("div");
+  divModal.className = "modal";
+  const divModalContent = document.createElement("div");
+  divModalContent.className = "modal-content";
+  const h2Modal = document.createElement("h2");
+  h2Modal.textContent = "Results";
+  const pModal = document.createElement("p");
+  pModal.textContent = "Text asdad";
+  const spanModal = document.createElement("span");
+  spanModal.className = "modal-close";
+  spanModal.textContent = "X";
+
+  divModalContent.appendChild(h2Modal);
+  divModalContent.appendChild(pModal);
+  divModalContent.appendChild(spanModal);
+  divModal.appendChild(divModalContent);
+
+  return divModal;
+};
+
+let modal = createModal();
+body.appendChild(modal);
+
 // Check button
 buttonsFooter[2].addEventListener("click", () => {
   let correctAnswers = 0;
   storageAnswerSelected.forEach((answer, index) => {
     if (answer === mockData[index].optionCorrect) correctAnswers++;
   });
-  alert(correctAnswers + " correct answers from " + mockData.length);
+
+  modal.style.opacity = "1";
+  modal.style.visibility = "visible";
+});
+
+const closeModal = () => {
+  modal.style.opacity = "0";
+  modal.style.visibility = "hidden";
+};
+
+// Close modal
+document.querySelector(".modal-close").addEventListener("click", () => {
+  closeModal();
+});
+
+// Close modal when click outside
+modal.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    closeModal();
+  }
 });
