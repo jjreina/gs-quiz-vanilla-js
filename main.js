@@ -169,13 +169,14 @@ const createModal = () => {
   divModalContent.className = "modal-content";
   const h2Modal = document.createElement("h2");
   h2Modal.textContent = "Results";
-  const pModal = document.createElement("p");
-  pModal.textContent = "Text asdad";
   const spanModal = document.createElement("span");
   spanModal.className = "modal-close";
   spanModal.textContent = "X";
+  const hrModal = document.createElement("hr");
+  const pModal = document.createElement("p");
 
   divModalContent.appendChild(h2Modal);
+  divModalContent.appendChild(hrModal);
   divModalContent.appendChild(pModal);
   divModalContent.appendChild(spanModal);
   divModal.appendChild(divModalContent);
@@ -192,6 +193,9 @@ buttonsFooter[2].addEventListener("click", () => {
   storageAnswerSelected.forEach((answer, index) => {
     if (answer === mockData[index].optionCorrect) correctAnswers++;
   });
+
+  let pModal = document.querySelector(".modal-content p");
+  pModal.textContent = `You have ${correctAnswers} correct answers out of ${mockData.length}`;
 
   modal.style.opacity = "1";
   modal.style.visibility = "visible";
