@@ -34,7 +34,7 @@ const TEXT_TITLE = "Quiz Question";
 
 const TEXT_BUTTONS_ARRAY = ["Previous", "Next", "Check"];
 
-const OPTIOON_SELECTED = "#3CB371";
+const OPTION_SELECTED = "#3CB371";
 
 let currentQuestionIndex = 0;
 
@@ -139,7 +139,7 @@ let findQuestionId = (stringQuestion) => {
 
 optionButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
-    button.style.background = OPTIOON_SELECTED;
+    button.style.background = OPTION_SELECTED;
     storageAnswerSelected[findQuestionId(pQuestion.textContent)] =
       e.target.textContent;
     resetOptions();
@@ -150,7 +150,7 @@ optionButtons.forEach((button) => {
 const resetOptions = () => {
   optionButtons.forEach((button) => {
     button.textContent === storageAnswerSelected[currentQuestionIndex]
-      ? (button.style.background = OPTIOON_SELECTED)
+      ? (button.style.background = OPTION_SELECTED)
       : button.removeAttribute("style");
   });
 };
