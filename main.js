@@ -1,32 +1,6 @@
 import "./style.css";
-
-const mockData = [
-  {
-    question: "What is the capital of France?",
-    options: ["London", "Berlin", "Paris", "Madrid"],
-    optionCorrect: "Paris",
-  },
-  {
-    question: "What is the longest river in the world?",
-    options: ["Amazonas", "Nilo", "Yangtsé", "Miño"],
-    optionCorrect: "Amazonas",
-  },
-  {
-    question: "Who wrote Romeo and Juliet?",
-    options: [
-      "Jane Austen",
-      "Cervantes",
-      "William Shakerpeare",
-      "Charles Dickens",
-    ],
-    optionCorrect: "William Shakerpeare",
-  },
-  {
-    question: "How many planets are there in our solar system?",
-    options: ["7", "8", "9", "10"],
-    optionCorrect: "8",
-  },
-];
+import * as mockData from "./mockData.js";
+import * as domHelper from "./domHelper.js";
 
 let storageAnswerSelected = [];
 
@@ -44,7 +18,7 @@ const body = document.querySelector("body");
 const h2Title = document.createElement("h2");
 h2Title.textContent = TEXT_TITLE;
 const pQuestion = document.createElement("p");
-pQuestion.textContent = mockData[0].question;
+pQuestion.textContent = mockData.data[0].question;
 
 const divContainer = document.createElement("div");
 divContainer.className = "container";
@@ -52,17 +26,10 @@ divContainer.className = "container";
 const divFooter = document.createElement("div");
 divFooter.className = "container-footer";
 
-const createButton = (text, className) => {
-  const button = document.createElement("button");
-  button.textContent = text;
-  button.classList.add(className);
-  return button;
-};
-
 let optionButtons = [];
 const createLi = (textButton) => {
   const li = document.createElement("li");
-  let button = createButton(textButton, "answer-btn");
+  let button = domHelper.createButton(textButton, "answer-btn");
   li.appendChild(button);
   optionButtons.push(button);
   return li;
@@ -80,7 +47,7 @@ const createUl = (textButtons) => {
 let buttonsFooter;
 const createFooter = (textButtons) => {
   buttonsFooter = textButtons.map((textButton) => {
-    let button = createButton(textButton, "footer-btn");
+    let button = domHelper.createButton(textButton, "footer-btn");
     if (textButton === "Previous") button.disabled = true;
     if (textButton === "Check") button.disabled = true;
     divFooter.appendChild(button);
@@ -91,7 +58,7 @@ const createFooter = (textButtons) => {
 
 divContainer.appendChild(h2Title);
 divContainer.appendChild(pQuestion);
-let ulContainer = createUl(mockData[currentQuestionIndex].options);
+let ulContainer = createUl(mockData.data[currentQuestionIndex].options);
 divContainer.appendChild(ulContainer);
 divContainer.appendChild(createFooter(TEXT_BUTTONS_ARRAY));
 body.appendChild(divContainer);
@@ -102,7 +69,7 @@ body.appendChild(divContainer);
 const setAnswers = (ulContainer, mockData) => {
   Array.from(ulContainer.children).forEach((liAnswer, index) => {
     liAnswer.firstChild.textContent =
-      mockData[currentQuestionIndex].options[index];
+      mockData.data[currentQuestionIndex].options[index];
   });
 };
 
@@ -111,7 +78,7 @@ buttonsFooter[0].addEventListener("click", () => {
   if (currentQuestionIndex > 0) {
     buttonsFooter[1].disabled = false; // Enable Next button
     currentQuestionIndex--;
-    pQuestion.textContent = mockData[currentQuestionIndex].question;
+    pQuestion.textContent = mockData.data[currentQuestionIndex].question;
     buttonsFooter[0].disabled = currentQuestionIndex === 0;
     setAnswers(ulContainer, mockData);
     resetOptions();
@@ -120,11 +87,12 @@ buttonsFooter[0].addEventListener("click", () => {
 
 // Next button
 buttonsFooter[1].addEventListener("click", () => {
-  if (currentQuestionIndex < mockData.length - 1) {
+  if (currentQuestionIndex < mockData.data.length - 1) {
     buttonsFooter[0].disabled = false; // Enable Previous button
     currentQuestionIndex++;
-    pQuestion.textContent = mockData[currentQuestionIndex].question;
-    buttonsFooter[1].disabled = currentQuestionIndex === mockData.length - 1;
+    pQuestion.textContent = mockData.data[currentQuestionIndex].question;
+    buttonsFooter[1].disabled =
+      currentQuestionIndex === mockData.data.length - 1;
     setAnswers(ulContainer, mockData);
     resetOptions();
   }
@@ -150,44 +118,22 @@ const resetOptions = () => {
 const enableCheckButton = () => {
   buttonsFooter[2].disabled = !(
     // filter(Boolean) removes all falsy(null, undefined, "", empty) values from an array
-    (storageAnswerSelected.filter(Boolean).length === mockData.length)
+    (storageAnswerSelected.filter(Boolean).length === mockData.data.length)
   );
 };
 
-const createModal = () => {
-  const divModal = document.createElement("div");
-  divModal.className = "modal";
-  const divModalContent = document.createElement("div");
-  divModalContent.className = "modal-content";
-  const h2Modal = document.createElement("h2");
-  h2Modal.textContent = "Results";
-  const spanModal = document.createElement("span");
-  spanModal.className = "modal-close";
-  spanModal.textContent = "X";
-  const hrModal = document.createElement("hr");
-  const pModal = document.createElement("p");
-
-  divModalContent.appendChild(h2Modal);
-  divModalContent.appendChild(hrModal);
-  divModalContent.appendChild(pModal);
-  divModalContent.appendChild(spanModal);
-  divModal.appendChild(divModalContent);
-
-  return divModal;
-};
-
-let modal = createModal();
+let modal = domHelper.createModal();
 body.appendChild(modal);
 
 // Check button
 buttonsFooter[2].addEventListener("click", () => {
   let correctAnswers = 0;
   storageAnswerSelected.forEach((answer, index) => {
-    if (answer === mockData[index].optionCorrect) correctAnswers++;
+    if (answer === mockData.data[index].optionCorrect) correctAnswers++;
   });
 
   let pModal = document.querySelector(".modal-content p");
-  pModal.textContent = `You have ${correctAnswers} correct answers out of ${mockData.length}`;
+  pModal.textContent = `You have ${correctAnswers} correct answers out of ${mockData.data.length}`;
 
   modal.style.opacity = "1";
   modal.style.visibility = "visible";
